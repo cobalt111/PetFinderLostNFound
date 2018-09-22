@@ -1,0 +1,133 @@
+{
+  "project_info": {
+    "project_number": "329069195597",
+    "firebase_url": "https://lostnfound-79ec3.firebaseio.com",
+    "project_id": "lostnfound-79ec3",
+    "storage_bucket": "lostnfound-79ec3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:329069195597:android:5499e03fcb2ea0ea",
+        "android_client_info": {
+          "package_name": "com.timothycox.lostnfound"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "329069195597-veivu50ta0to29co7o2083s2r0mue84c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCTvSh474rZAqNqIfCDpMiBLvBy4Nk_eZo"
+        },
+        {
+          "current_key": "AIzaSyDrGqjdARAFG2TnaxdylI6OYf5Gy3bhrYE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:329069195597:android:9b19b6d33446d28c",
+        "android_client_info": {
+          "package_name": "com.timothycox.lostnfound.alpha"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "329069195597-veivu50ta0to29co7o2083s2r0mue84c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCTvSh474rZAqNqIfCDpMiBLvBy4Nk_eZo"
+        },
+        {
+          "current_key": "AIzaSyDrGqjdARAFG2TnaxdylI6OYf5Gy3bhrYE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:329069195597:android:7792bab62006cc7c",
+        "android_client_info": {
+          "package_name": "com.timothycox.petfinder_lostnfound"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "329069195597-l0elfqcor57906a9e135e6dq12h0g2b9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.timothycox.petfinder_lostnfound",
+            "certificate_hash": "975f1fcbbe47c107a3376918f83334912b2f72f1"
+          }
+        },
+        {
+          "client_id": "329069195597-veivu50ta0to29co7o2083s2r0mue84c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCTvSh474rZAqNqIfCDpMiBLvBy4Nk_eZo"
+        },
+        {
+          "current_key": "AIzaSyDrGqjdARAFG2TnaxdylI6OYf5Gy3bhrYE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "329069195597-veivu50ta0to29co7o2083s2r0mue84c.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "329069195597-s394b15neec1ogeee0n6a2ns1ol4rbsa.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.jameshorlowski.lostnfound"
+              }
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
