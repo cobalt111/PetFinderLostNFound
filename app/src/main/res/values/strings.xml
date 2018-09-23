@@ -4,16 +4,60 @@
     <string name="title_listings">Listings</string>
     <string name="title_yourpets">Your Pets</string>
     <string name="title_map">Map</string>
+    <string name="title_post">Post an Animal</string>
 
     <string name="title_activity_intro">IntroActivity</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="map">map</string>
-    <string name="intro">intro</string>
-    <string name="home">home</string>
-    <string name="listings">listings</string>
-    <string name="post">post</string>
+
+
+    <string name="post_name" />
+    <string name="post_color" />
+    <string name="post_location" />
+    <string name="post_email" />
+    <string name="post_date" />
+    <string name="post_phone" />
+    <string name="post_description" />
+    <string name="post_type">Animal type:  </string>
+    <string name="post_status">Status: </string>
+    <string name="post_picture">Picture</string>
+    <string name="post_hint_name">Animal\'s name</string>
+    <string name="post_hint_color">Animal\'s color/appearance</string>
+    <string name="post_hint_date">Date lost</string>
+    <string name="post_hint_location">Last known location</string>
+    <string name="post_hint_phone">Your phone</string>
+    <string name="post_hint_email">Your email</string>
+    <string name="post_hint_description">Extra info</string>
+    <string name="post_pic_button">Add Pic</string>
+
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="profile_type">Type:</string>
+    <string name="profile_name">Name:</string>
+    <string name="profile_color">Appearance:</string>
+    <string name="profile_location">Location:</string>
+    <string name="profile_date">Date:</string>
+    <string name="profile_phone">Phone:</string>
+    <string name="profile_email">Email:</string>
+    <string name="profile_description">Extra Info:</string>
+    <string name="profile_status">Status:</string>
+
+    <string-array name="type_dropdown">
+        <item>Dog</item>
+        <item>Cat</item>
+        <item>Hamster/Guinea Pig</item>
+        <item>Mouse/Rat</item>
+        <item>Bird</item>
+        <item>Snake/Lizard</item>
+        <item>Ferret</item>
+        <item>Other</item>
+    </string-array>
+
+    <string-array name="status_dropdown">
+        <item>Lost</item>
+        <item>Found</item>
+    </string-array>
 
 </resources>

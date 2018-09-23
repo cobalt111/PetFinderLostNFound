@@ -7,9 +7,13 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.ImageButton;
 
 import com.timothycox.petfinder_lostnfound.R;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -19,9 +23,16 @@ import com.timothycox.petfinder_lostnfound.R;
  * Use the {@link HomeFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements HomeView {
 
-    private TextView textView;
+    @BindView(R.id.home_post_button)
+    ImageButton imageButton;
+    private HomePresenter presenter;
+
+    @OnClick(R.id.home_post_button)
+    void onClickPost() {
+        presenter.onPost(getContext());
+    }
 
     private OnFragmentInteractionListener mListener;
 
@@ -39,15 +50,16 @@ public class HomeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        textView = getActivity().findViewById(R.id.testTEXT);
+        presenter = new HomePresenter(this);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_home, container, false);
+        ButterKnife.bind(this, rootView);
+
+        return rootView;
     }
 
     @Override

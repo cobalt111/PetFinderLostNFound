@@ -13,56 +13,55 @@ import com.timothycox.petfinder_lostnfound.home.HomeFragment;
 import com.timothycox.petfinder_lostnfound.listings.ListingsFragment;
 import com.timothycox.petfinder_lostnfound.listings.dummy.DummyContent;
 
-public class MainActivity extends AppCompatActivity implements HomeFragment.OnFragmentInteractionListener, ListingsFragment.OnListFragmentInteractionListener {
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
-    private ViewPager viewPager;
+public class MainActivity extends AppCompatActivity implements HomeFragment.OnFragmentInteractionListener,
+        ListingsFragment.OnListFragmentInteractionListener {
+
+    @BindView(R.id.viewpager)
+    ViewPager viewPager;
+
     private ViewPagerAdapter viewPagerAdapter;
+
+    // region BottomNavigationView
     // todo add proper buttons and actions for bottomnavview
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
         // todo change to use home, listings, yourpets
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
                     setTitle(R.string.title_home);
+                    viewPager.setCurrentItem(0);
                     return true;
                 case R.id.navigation_listings:
                     setTitle(R.string.title_listings);
+                    viewPager.setCurrentItem(1);
                     return true;
                 case R.id.navigation_yourpets:
                     setTitle(R.string.title_yourpets);
-                    return true;
-                case R.id.navigation_map:
-                    setTitle(R.string.title_map);
+                    viewPager.setCurrentItem(2);
                     return true;
             }
             return false;
         }
     };
+    // endregion
 
+    // region Activity Lifecycle
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
 
         viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-        viewPager = findViewById(R.id.viewpager);
         viewPager.setAdapter(viewPagerAdapter);
 
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-    }
-
-    @Override
-    public void onFragmentInteraction(Uri uri) {
-
-    }
-
-    @Override
-    public void onListFragmentInteraction(DummyContent.DummyItem item) {
-
     }
 
     @Override
@@ -89,9 +88,25 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
     protected void onDestroy() {
         super.onDestroy();
     }
+    // endregion
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
+
+    @Override
+    public void onListFragmentInteraction(DummyContent.DummyItem item) {
+
+    }
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        int currentItem = viewPager.getCurrentItem();
+        if (currentItem == 0) {
+            super.onBackPressed();
+        } else {
+            viewPager.setCurrentItem(currentItem - 1);
+        }
     }
 }
