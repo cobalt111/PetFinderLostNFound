@@ -1,4 +1,6 @@
 package com.timothycox.petfinder_lostnfound.post;
 
-public interface PostView {
+import com.timothycox.petfinder_lostnfound.BaseView;
+
+interface PostView extends BaseView {
 }

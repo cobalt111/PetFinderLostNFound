@@ -1,4 +1,7 @@
 package com.timothycox.petfinder_lostnfound.listings.yourpets;
 
-public class YourPetsPresenter {
+import com.timothycox.petfinder_lostnfound.BasePresenter;
+
+class YourPetsPresenter extends BasePresenter {
+
 }

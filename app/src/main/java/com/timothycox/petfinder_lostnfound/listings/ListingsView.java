@@ -1,4 +1,6 @@
 package com.timothycox.petfinder_lostnfound.listings;
 
-public interface ListingsView {
+import com.timothycox.petfinder_lostnfound.BaseView;
+
+public interface ListingsView extends BaseView {
 }

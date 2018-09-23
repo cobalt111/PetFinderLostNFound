@@ -1,17 +1,23 @@
 package com.timothycox.petfinder_lostnfound.main;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import com.timothycox.petfinder_lostnfound.R;
+import com.timothycox.petfinder_lostnfound.home.HomeFragment;
+import com.timothycox.petfinder_lostnfound.listings.ListingsFragment;
+import com.timothycox.petfinder_lostnfound.listings.dummy.DummyContent;
 
-public class MainActivity extends AppCompatActivity implements MainView {
+public class MainActivity extends AppCompatActivity implements HomeFragment.OnFragmentInteractionListener, ListingsFragment.OnListFragmentInteractionListener {
 
-
+    private ViewPager viewPager;
+    private ViewPagerAdapter viewPagerAdapter;
+    // todo add proper buttons and actions for bottomnavview
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -20,10 +26,16 @@ public class MainActivity extends AppCompatActivity implements MainView {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
+                    setTitle(R.string.title_home);
                     return true;
-                case R.id.navigation_dashboard:
+                case R.id.navigation_listings:
+                    setTitle(R.string.title_listings);
                     return true;
-                case R.id.navigation_notifications:
+                case R.id.navigation_yourpets:
+                    setTitle(R.string.title_yourpets);
+                    return true;
+                case R.id.navigation_map:
+                    setTitle(R.string.title_map);
                     return true;
             }
             return false;
@@ -35,8 +47,51 @@ public class MainActivity extends AppCompatActivity implements MainView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
+        viewPager = findViewById(R.id.viewpager);
+        viewPager.setAdapter(viewPagerAdapter);
+
+        BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
 
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
+
+    @Override
+    public void onListFragmentInteraction(DummyContent.DummyItem item) {
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 }

@@ -1,4 +1,6 @@
 package com.timothycox.petfinder_lostnfound.map;
 
-public interface MapView {
+import com.timothycox.petfinder_lostnfound.BaseView;
+
+interface MapView extends BaseView {
 }

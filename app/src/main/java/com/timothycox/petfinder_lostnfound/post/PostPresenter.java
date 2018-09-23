@@ -1,4 +1,6 @@
 package com.timothycox.petfinder_lostnfound.post;
 
-public class PostPresenter {
+import com.timothycox.petfinder_lostnfound.BasePresenter;
+
+class PostPresenter extends BasePresenter {
 }

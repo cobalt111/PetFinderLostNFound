@@ -1,4 +1,6 @@
 package com.timothycox.petfinder_lostnfound.map;
 
-public class MapPresenter {
+import com.timothycox.petfinder_lostnfound.BasePresenter;
+
+class MapPresenter extends BasePresenter {
 }

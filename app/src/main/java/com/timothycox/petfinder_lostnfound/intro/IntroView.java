@@ -1,4 +1,6 @@
 package com.timothycox.petfinder_lostnfound.intro;
 
-public interface IntroView {
+import com.timothycox.petfinder_lostnfound.BaseView;
+
+interface IntroView extends BaseView {
 }

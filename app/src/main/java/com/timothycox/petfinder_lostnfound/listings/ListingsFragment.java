@@ -14,8 +14,6 @@ import com.timothycox.petfinder_lostnfound.R;
 import com.timothycox.petfinder_lostnfound.listings.dummy.DummyContent;
 import com.timothycox.petfinder_lostnfound.listings.dummy.DummyContent.DummyItem;
 
-import java.util.List;
-
 /**
  * A fragment representing a list of Items.
  * <p/>
@@ -39,11 +37,8 @@ public class ListingsFragment extends Fragment implements ListingsView {
 
     // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
-    public static ListingsFragment newInstance(int columnCount) {
+    public static ListingsFragment newInstance() {
         ListingsFragment fragment = new ListingsFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_COLUMN_COUNT, columnCount);
-        fragment.setArguments(args);
         return fragment;
     }
 

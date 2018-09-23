@@ -22,15 +22,19 @@ public class Database {
         return ourInstance;
     }
 
+    public DatabaseReference getDatabaseReference() {
+        return databaseReference;
+    }
+
     public interface OnGetDataListener {
         void onSuccess(DataSnapshot dataSnapshot);
         void onStart();
         void onFailure(DatabaseError databaseError);
     }
 
-    public void loadAnimals(Query query, boolean updateable, final OnGetDataListener listener) {
+    public void loadAnimals(Query query, boolean continuousUpdating, final OnGetDataListener listener) {
         listener.onStart();
-        if (updateable) {
+        if (continuousUpdating) {
             query.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {

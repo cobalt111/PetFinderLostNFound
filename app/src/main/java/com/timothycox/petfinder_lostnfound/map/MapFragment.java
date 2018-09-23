@@ -18,7 +18,7 @@ import com.timothycox.petfinder_lostnfound.R;
  * Use the {@link MapFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MapFragment extends Fragment {
+public class MapFragment extends Fragment implements MapView {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -33,6 +33,7 @@ public class MapFragment extends Fragment {
     public MapFragment() {
         // Required empty public constructor
     }
+
 
     /**
      * Use this factory method to create a new instance of
