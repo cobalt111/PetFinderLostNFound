@@ -39,6 +39,9 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'com.github.bumptech.glide:glide:4.8.0'
     implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'org.mockito:mockito-android:2.22.0'
+    implementation 'org.mockito:mockito-core:2.22.0'
+    implementation 'org.mockito:mockito-junit-jupiter:2.22.0'
 }
 
 apply plugin: 'com.google.gms.google-services'

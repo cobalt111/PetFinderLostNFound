@@ -1,11 +1,8 @@
 package com.timothycox.petfinder_lostnfound.post;
 
-import android.content.Context;
-
 import com.timothycox.petfinder_lostnfound.BasePresenter;
+import com.timothycox.petfinder_lostnfound.model.Animal;
 import com.timothycox.petfinder_lostnfound.util.DatabaseRequest;
-
-import java.util.HashMap;
 
 class PostPresenter extends BasePresenter {
 
@@ -114,12 +111,9 @@ class PostPresenter extends BasePresenter {
 //    }
 
     // todo get location data of phone to add to hashmap before submitting
-    void onSubmit(HashMap<String, Object> animal) {
-
-
+    void onSubmit(Animal animal) {
 //        animal.put("latitude", Double.toString(location.getLatitude()));
 //        animal.put("longitude", Double.toString(location.getLongitude()));
-//        animal.put("token", FirebaseInstanceId.getInstance().getToken();
         DatabaseRequest.submitAnimal(animal);
     }
 
@@ -127,12 +121,9 @@ class PostPresenter extends BasePresenter {
 
     }
 
+    // todo figure out how to cache images for this
     void onEdit(final String animalID) {
-        HashMap<String, Object> animal = new HashMap<>();
-
-        // todo receive data from db
-
-        postView.populateDataFields(animal);
+        postView.populateDataFields(DatabaseRequest.getAnimal(animalID));
     }
 
 }

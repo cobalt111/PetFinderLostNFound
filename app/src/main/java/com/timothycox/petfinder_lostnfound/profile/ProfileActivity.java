@@ -7,8 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.timothycox.petfinder_lostnfound.R;
-
-import java.util.HashMap;
+import com.timothycox.petfinder_lostnfound.model.Animal;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -70,16 +69,16 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView {
     }
 
     @Override
-    public void populateDataFields(HashMap<String, Object> animal) {
-        nameTextFromDB.setText(animal.get("name").toString());
-        colorTextFromDB.setText(animal.get("color").toString());
-        dateTextFromDB.setText(animal.get("date").toString());
-        emailTextFromDB.setText(animal.get("email").toString());
-        descriptionTextFromDB.setText(animal.get("description").toString());
-        locationTextFromDB.setText(animal.get("location").toString());
-        phoneTextFromDB.setText(animal.get("phone").toString());
-        typeTextFromDB.setText(animal.get("type").toString());
-        statusTextFromDB.setText(animal.get("found").toString());
+    public void populateDataFields(Animal animal) {
+        nameTextFromDB.setText(animal.getName());
+        colorTextFromDB.setText(animal.getColor());
+        dateTextFromDB.setText(animal.getDate());
+        emailTextFromDB.setText(animal.getEmail());
+        descriptionTextFromDB.setText(animal.getDescription());
+        locationTextFromDB.setText(animal.getLocation());
+        phoneTextFromDB.setText(animal.getPhone());
+        typeTextFromDB.setText(animal.getType());
+        statusTextFromDB.setText(animal.getStatus());
     }
 
     @Override
@@ -88,8 +87,8 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView {
         presenter.onEdit(getApplicationContext());
     }
 
-    //    @OnClick(R.id.profile_)
     @Override
+    //    @OnClick(R.id.profile_)
     public void onClickStatusChange() {
         presenter.onStatusChange();
     }

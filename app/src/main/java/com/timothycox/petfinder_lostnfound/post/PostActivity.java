@@ -10,8 +10,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.timothycox.petfinder_lostnfound.R;
-
-import java.util.HashMap;
+import com.timothycox.petfinder_lostnfound.model.Animal;
 
 import butterknife.BindArray;
 import butterknife.BindView;
@@ -87,7 +86,6 @@ public class PostActivity extends AppCompatActivity implements PostView {
         ButterKnife.bind(this);
         presenter = new PostPresenter(this);
 
-        // region Spinner Adapters
         ArrayAdapter<String> typeAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, types);
         typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         typeDropdown.setAdapter(typeAdapter);
@@ -95,58 +93,38 @@ public class PostActivity extends AppCompatActivity implements PostView {
         ArrayAdapter<String> statusAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, statuses);
         statusAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         statusDropdown.setAdapter(statusAdapter);
-        // endregion
 
         Intent intent = getIntent();
         if (intent.getBooleanExtra("isEditInstance", false)) {
             presenter.onEdit(intent.getStringExtra("animalID"));
         }
-
-        // region Old click listeners
-
-//        typeDropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                typeSelection = typesList[position];
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {
-//                typeSelection = null;
-//            }
-//        });
-
-//        statusDropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                statusSelection = statusList[position];
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {
-//                statusSelection = null;
-//            }
-//        });
-
-        // endregion
     }
 
     @Override
     @OnClick(R.id.post_submit_button)
     public void onClickSubmit() {
-        HashMap<String, Object> animal = new HashMap<>();
-
-        animal.put("name", nameField.getText().toString());
-        animal.put("color", colorField.getText().toString());
-        animal.put("date", dateField.getText().toString());
-        animal.put("email", emailField.getText().toString());
-        animal.put("description", descriptionField.getText().toString());
-        animal.put("phone", phoneField.getText().toString());
-        animal.put("location", locationField.getText().toString());
-        animal.put("type", typeSelection);
-        animal.put("found", statusSelection);
-
+        // todo figure out if we need animalbuilder
+        Animal.AnimalBuilder builder = new Animal.AnimalBuilder();
+        Animal animal = builder.name(nameField.getText().toString())
+                .color(colorField.getTag().toString())
+                .date(dateField.getText().toString())
+                .phone(phoneField.getText().toString())
+                .email(emailField.getText().toString())
+                .description(descriptionField.getText().toString())
+                .location(locationField.getText().toString())
+                .type(typeSelection)
+                .status(statusSelection)
+                .build();
         presenter.onSubmit(animal);
+//        animal.put("name", nameField.getText().toString());
+//        animal.put("color", colorField.getText().toString());
+//        animal.put("date", dateField.getText().toString());
+//        animal.put("email", emailField.getText().toString());
+//        animal.put("description", descriptionField.getText().toString());
+//        animal.put("phone", phoneField.getText().toString());
+//        animal.put("location", locationField.getText().toString());
+//        animal.put("type", typeSelection);
+//        animal.put("found", statusSelection);
     }
 
     @Override
@@ -156,21 +134,20 @@ public class PostActivity extends AppCompatActivity implements PostView {
     }
 
     @Override
-    public void populateDataFields(HashMap<String, Object> currentAnimal) {
-        nameField.setText(currentAnimal.get("name").toString());
-        colorField.setText(currentAnimal.get("color").toString());
-        dateField.setText(currentAnimal.get("date").toString());
-        emailField.setText(currentAnimal.get("email").toString());
-        phoneField.setText(currentAnimal.get("phone").toString());
-        descriptionField.setText(currentAnimal.get("description").toString());
-        locationField.setText(currentAnimal.get("location").toString());
+    public void populateDataFields(Animal animal) {
+        nameField.setText(animal.getName());
+        colorField.setText(animal.getColor());
+        dateField.setText(animal.getDate());
+        emailField.setText(animal.getEmail());
+        phoneField.setText(animal.getPhone());
+        descriptionField.setText(animal.getDescription());
+        locationField.setText(animal.getLocation());
 
-        typeSelection = currentAnimal.get("type").toString();
+        typeSelection = animal.getType();
         setDropdownSelection(typeDropdown, typeSelection, types);
 
-        statusSelection = currentAnimal.get("found").toString();
+        statusSelection = animal.getStatus();
         setDropdownSelection(statusDropdown, statusSelection, statuses);
-
         // todo retrieve and set images
     }
 
