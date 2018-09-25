@@ -18,45 +18,45 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView {
 
     // region ButterKnife Bindings
     @BindView(R.id.profile_imageview)
-    ImageView profilePicture;
+    ImageView pictureView;
     @BindView(R.id.profile_edit_button)
     ImageButton editButton;
     @BindView(R.id.profile_name)
-    TextView profileName;
+    TextView nameText;
     @BindView(R.id.profile_type)
-    TextView profileType;
+    TextView typeText;
     @BindView(R.id.profile_color)
-    TextView profileColor;
+    TextView colorText;
     @BindView(R.id.profile_location)
-    TextView profileLocation;
+    TextView locationText;
     @BindView(R.id.profile_phone)
-    TextView profilePhone;
+    TextView phoneText;
     @BindView(R.id.profile_date)
     TextView profileDate;
     @BindView(R.id.profile_email)
-    TextView profileEmail;
+    TextView emailText;
     @BindView(R.id.profile_status)
-    TextView profileStatus;
+    TextView statusText;
     @BindView(R.id.profile_description)
-    TextView profileDescription;
+    TextView descriptionText;
     @BindView(R.id.profile_name_db)
-    TextView profileNameFromDB;
+    TextView nameTextFromDB;
     @BindView(R.id.profile_type_db)
-    TextView profileTypeFromDB;
+    TextView typeTextFromDB;
     @BindView(R.id.profile_color_db)
-    TextView profileColorFromDB;
+    TextView colorTextFromDB;
     @BindView(R.id.profile_location_db)
-    TextView profileLocationFromDB;
+    TextView locationTextFromDB;
     @BindView(R.id.profile_phone_db)
-    TextView profilePhoneFromDB;
+    TextView phoneTextFromDB;
     @BindView(R.id.profile_date_db)
-    TextView profileDateFromDB;
+    TextView dateTextFromDB;
     @BindView(R.id.profile_email_db)
-    TextView profileEmailFromDB;
+    TextView emailTextFromDB;
     @BindView(R.id.profile_status_db)
-    TextView profileStatusFromDB;
+    TextView statusTextFromDB;
     @BindView(R.id.profile_description_db)
-    TextView profileDescriptionFromDB;
+    TextView descriptionTextFromDB;
     private ProfilePresenter presenter;
     // endregion
 
@@ -71,15 +71,15 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView {
 
     @Override
     public void populateDataFields(HashMap<String, Object> animal) {
-        profileNameFromDB.setText(animal.get("name").toString());
-        profileColorFromDB.setText(animal.get("color").toString());
-        profileDateFromDB.setText(animal.get("date").toString());
-        profileEmailFromDB.setText(animal.get("email").toString());
-        profileDescriptionFromDB.setText(animal.get("description").toString());
-        profileLocationFromDB.setText(animal.get("location").toString());
-        profilePhoneFromDB.setText(animal.get("phone").toString());
-        profileTypeFromDB.setText(animal.get("type").toString());
-        profileStatusFromDB.setText(animal.get("found").toString());
+        nameTextFromDB.setText(animal.get("name").toString());
+        colorTextFromDB.setText(animal.get("color").toString());
+        dateTextFromDB.setText(animal.get("date").toString());
+        emailTextFromDB.setText(animal.get("email").toString());
+        descriptionTextFromDB.setText(animal.get("description").toString());
+        locationTextFromDB.setText(animal.get("location").toString());
+        phoneTextFromDB.setText(animal.get("phone").toString());
+        typeTextFromDB.setText(animal.get("type").toString());
+        statusTextFromDB.setText(animal.get("found").toString());
     }
 
     @Override

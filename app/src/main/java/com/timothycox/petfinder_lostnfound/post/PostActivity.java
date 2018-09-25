@@ -146,7 +146,7 @@ public class PostActivity extends AppCompatActivity implements PostView {
         animal.put("type", typeSelection);
         animal.put("found", statusSelection);
 
-        presenter.onSubmit(getApplicationContext(), animal);
+        presenter.onSubmit(animal);
     }
 
     @Override

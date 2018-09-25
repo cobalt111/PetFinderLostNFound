@@ -114,7 +114,7 @@ class PostPresenter extends BasePresenter {
 //    }
 
     // todo get location data of phone to add to hashmap before submitting
-    void onSubmit(Context context, HashMap<String, Object> animal) {
+    void onSubmit(HashMap<String, Object> animal) {
 
 
 //        animal.put("latitude", Double.toString(location.getLatitude()));

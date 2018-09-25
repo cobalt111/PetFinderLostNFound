@@ -12,6 +12,7 @@ import com.timothycox.petfinder_lostnfound.R;
 import com.timothycox.petfinder_lostnfound.home.HomeFragment;
 import com.timothycox.petfinder_lostnfound.listings.ListingsFragment;
 import com.timothycox.petfinder_lostnfound.listings.dummy.DummyContent;
+import com.timothycox.petfinder_lostnfound.util.DatabaseCache;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -56,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        DatabaseCache.setCacheDirectory(getApplicationContext().getCacheDir());
 
         viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(viewPagerAdapter);
