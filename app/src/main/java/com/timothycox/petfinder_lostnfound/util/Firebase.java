@@ -24,16 +24,16 @@ class Firebase {
         return ourInstance;
     }
 
-    public DatabaseReference getDatabaseReference() {
+    DatabaseReference getDatabaseReference() {
         return databaseReference;
     }
 
-    public String getFirebaseInstanceToken() {
+    String getFirebaseInstanceToken() {
         return firebaseInstanceToken;
     }
 
-    public void access(boolean continuousUpdating,
-                       final Firebase.OnGetDataListener listener) {
+    void access(boolean continuousUpdating,
+                final Firebase.OnGetDataListener listener) {
         listener.onStart();
         if (continuousUpdating) {
             databaseReference.addValueEventListener(new ValueEventListener() {

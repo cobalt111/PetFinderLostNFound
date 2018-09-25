@@ -1,49 +1,91 @@
 package com.timothycox.petfinder_lostnfound.util;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.timothycox.petfinder_lostnfound.exception.DataNotReturnedException;
+import com.timothycox.petfinder_lostnfound.model.Animal;
+
+import org.json.JSONObject;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Reader;
 import java.util.Calendar;
+
+import static android.support.constraint.Constraints.TAG;
 
 public class DatabaseCache {
 
-    private static final DatabaseCache databaseCache = new DatabaseCache();
-    private static final int UPDATE_HOUR_INTERVAL = 6;
-    private static File cacheDirectory;
-    private static Calendar lastModifiedTime;
+    private static final int UPDATE_INTERVAL_HOURS = 6;
+    private static final String CACHE_FILENAME = "lnf-cache.json";
+    private static File cache;
+    private static Calendar lastModifiedTimestamp;
 
-    private DatabaseCache() {
-        updateCache();
+    // todo is passing context instead of passing file correct?
+    public static void setCache(@NonNull Context context) {
+        cache = new File(context.getCacheDir(), CACHE_FILENAME);
     }
 
-    public static DatabaseCache getInstance() {
-        return databaseCache;
-    }
-
-    public static void updateCache() {
-//        JsonArray jsonArray = DatabaseRequest.downloadDatabase();
-
-        // todo write db to cache dir
-
-        updateLastModifiedTime();
-    }
-
-//    public static JsonArray loadEntryFromCache(@NonNull final String animalID) {
-//        // todo learn how to search JSON for data and return it
-//        return
-//    }
-
-    public static void setCacheDirectory(@NonNull File directory) {
-        cacheDirectory = directory;
+    // todo verify calendar operates properly
+    public static void updateCache(boolean forceUpdate) {
+        if (!validCache(Calendar.getInstance()) || forceUpdate) {
+            writeDatabaseToFile();
+            updateLastModifiedTimestamp();
+        }
     }
 
     public static boolean validCache(@NonNull Calendar currentTime) {
-        return currentTime.get(Calendar.HOUR) < lastModifiedTime.get(Calendar.HOUR) + UPDATE_HOUR_INTERVAL;
+        return currentTime.get(Calendar.HOUR) < lastModifiedTimestamp.get(Calendar.HOUR) + UPDATE_INTERVAL_HOURS;
     }
 
-    private static void updateLastModifiedTime() {
-        lastModifiedTime = Calendar.getInstance();
+    // todo figure out how to read from file properly
+    public static JsonObject readDatabaseFromFile() {
+        try {
+            FileReader reader = new FileReader(cache);
+            return new JsonParser().parse(reader).getAsJsonObject();
+        } catch (IOException e) {
+            Log.d(TAG, "Error reading JSON from cache.");
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static boolean verifyCacheFile() {
+        if (!cache.exists()) {
+            try {
+                return cache.createNewFile();
+            } catch (IOException e) {
+                Log.d(TAG, "Error creating cache file.");
+                e.printStackTrace();
+                return false;
+            }
+        } else return true;
+    }
+
+    private static void writeDatabaseToFile() {
+        JsonObject jsonObject = DatabaseRequest.loadDatabase(true);
+        try {
+            FileWriter writer = new FileWriter(cache);
+            writer.write(jsonObject.toString());
+        } catch (IOException e) {
+            Log.d(TAG, "Error writing JSON to cache.");
+            e.printStackTrace();
+        }
+    }
+
+
+    private static void updateLastModifiedTimestamp() {
+        lastModifiedTimestamp = Calendar.getInstance();
     }
 }

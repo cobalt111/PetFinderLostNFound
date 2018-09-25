@@ -14,6 +14,8 @@ import com.timothycox.petfinder_lostnfound.listings.ListingsFragment;
 import com.timothycox.petfinder_lostnfound.listings.dummy.DummyContent;
 import com.timothycox.petfinder_lostnfound.util.DatabaseCache;
 
+import java.util.Calendar;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -57,7 +59,9 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        DatabaseCache.setCacheDirectory(getApplicationContext().getCacheDir());
+        DatabaseCache.setCache(getApplicationContext());
+        DatabaseCache.verifyCacheFile();
+        DatabaseCache.updateCache(true);
 
         viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(viewPagerAdapter);
