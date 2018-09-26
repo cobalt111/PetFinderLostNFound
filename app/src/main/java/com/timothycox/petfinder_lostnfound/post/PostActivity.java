@@ -95,9 +95,8 @@ public class PostActivity extends AppCompatActivity implements PostView {
         statusDropdown.setAdapter(statusAdapter);
 
         Intent intent = getIntent();
-        if (intent.getBooleanExtra("isEditInstance", false)) {
+        if (intent.getBooleanExtra("isEditInstance", false))
             presenter.onEdit(intent.getStringExtra("animalID"));
-        }
     }
 
     @Override
@@ -105,7 +104,8 @@ public class PostActivity extends AppCompatActivity implements PostView {
     public void onClickSubmit() {
         // todo figure out if we need animalbuilder
         Animal.AnimalBuilder builder = new Animal.AnimalBuilder();
-        Animal animal = builder.name(nameField.getText().toString())
+        Animal animal = builder
+                .name(nameField.getText().toString())
                 .color(colorField.getTag().toString())
                 .date(dateField.getText().toString())
                 .phone(phoneField.getText().toString())
@@ -115,16 +115,7 @@ public class PostActivity extends AppCompatActivity implements PostView {
                 .type(typeSelection)
                 .status(statusSelection)
                 .build();
-        presenter.onSubmit(animal);
-//        animal.put("name", nameField.getText().toString());
-//        animal.put("color", colorField.getText().toString());
-//        animal.put("date", dateField.getText().toString());
-//        animal.put("email", emailField.getText().toString());
-//        animal.put("description", descriptionField.getText().toString());
-//        animal.put("phone", phoneField.getText().toString());
-//        animal.put("location", locationField.getText().toString());
-//        animal.put("type", typeSelection);
-//        animal.put("found", statusSelection);
+        presenter.onSubmit(getApplicationContext(), animal);
     }
 
     @Override
@@ -142,10 +133,8 @@ public class PostActivity extends AppCompatActivity implements PostView {
         phoneField.setText(animal.getPhone());
         descriptionField.setText(animal.getDescription());
         locationField.setText(animal.getLocation());
-
         typeSelection = animal.getType();
         setDropdownSelection(typeDropdown, typeSelection, types);
-
         statusSelection = animal.getStatus();
         setDropdownSelection(statusDropdown, statusSelection, statuses);
         // todo retrieve and set images

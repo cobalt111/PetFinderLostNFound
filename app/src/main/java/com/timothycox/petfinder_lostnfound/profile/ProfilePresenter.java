@@ -14,28 +14,28 @@ class ProfilePresenter extends BasePresenter {
     private ProfileView profileView;
     private String animalID;
 
-    ProfilePresenter(@NonNull ProfileView profileView, @NonNull final String animalID) {
+    public ProfilePresenter(@NonNull ProfileView profileView, @NonNull final String animalID) {
         this.profileView = profileView;
         this.animalID = animalID;
     }
 
-    void createProfile() {
+    public void createProfile() {
         Animal animal = DatabaseRequest.getAnimal(animalID);
         profileView.populateDataFields(animal);
     }
 
-    void onEdit(@NonNull Context context) {
+    public void onEdit(@NonNull Context context) {
         Intent intent = new Intent(context, PostActivity.class);
         intent.putExtra("animalID", animalID);
         intent.putExtra("isEditInstance", true);
         context.startActivity(intent);
     }
 
-    void onStatusChange() {
+    public void onStatusChange() {
 
     }
 
-    private void notifyOwnerOfFoundStatusChange() {
+    public void notifyOwnerOfFoundStatusChange() {
 
     }
 }

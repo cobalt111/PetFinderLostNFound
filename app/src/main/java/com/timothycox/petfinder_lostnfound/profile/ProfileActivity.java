@@ -87,6 +87,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView {
         presenter.onEdit(getApplicationContext());
     }
 
+    // todo setup status change button
     @Override
     //    @OnClick(R.id.profile_)
     public void onClickStatusChange() {

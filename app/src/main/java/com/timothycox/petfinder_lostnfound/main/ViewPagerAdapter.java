@@ -13,11 +13,10 @@ import java.util.List;
 
 class ViewPagerAdapter extends FragmentPagerAdapter {
 
-    private static List<Fragment> fragmentList = new ArrayList<>();
+    private List<Fragment> fragmentList = new ArrayList<>();
 
     ViewPagerAdapter(FragmentManager fm) {
         super(fm);
-
         fragmentList.add(HomeFragment.newInstance());
         fragmentList.add(ListingsFragment.newInstance());
         fragmentList.add(YourPetsFragment.newInstance());
