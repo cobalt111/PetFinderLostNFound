@@ -20,7 +20,11 @@ import com.timothycox.petfinder_lostnfound.listings.dummy.DummyContent.DummyItem
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
  */
-public class ListingsFragment extends Fragment implements ListingsView {
+public class ListingsFragment extends Fragment {
+
+    public interface ListingsNavigator {
+
+    }
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";

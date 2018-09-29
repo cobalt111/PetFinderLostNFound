@@ -1,29 +1,77 @@
 package com.timothycox.petfinder_lostnfound.post;
 
-import android.content.Context;
-import android.content.pm.PackageManager;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
-import android.util.Log;
+import android.support.annotation.NonNull;
 
-import com.timothycox.petfinder_lostnfound.BasePresenter;
+import com.timothycox.petfinder_lostnfound.BasePresenterImpl;
 import com.timothycox.petfinder_lostnfound.model.Animal;
-import com.timothycox.petfinder_lostnfound.util.DatabaseRequest;
 
-import static android.support.constraint.Constraints.TAG;
+class PostPresenterImpl extends BasePresenterImpl<PostContract.View> implements PostContract.Presenter {
 
-class PostPresenter extends BasePresenter {
+    private PostContract.View postView;
 
-    private PostView postView;
-
-    public PostPresenter(PostView postView) {
+    PostPresenterImpl(@NonNull PostContract.View postView) {
         this.postView = postView;
     }
 
-//        //TODO add picture functionality
+    @Override
+    public void createEditInstance(@NonNull final Animal animal) {
+        postView.populateDataFields(animal);
+    }
+
+    @Override
+    public void onClickSubmit(Animal animal) {
+//        LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+//        LocationListener locationListener = new LocationListener() {
+//            @Override
+//            public void onLocationChanged(Location location) {
+//                animal.setLatitude(String.valueOf(location.getLatitude()));
+//                animal.setLongitude(String.valueOf(location.getLongitude()));
+//                DatabaseProvider.submitAnimal(animal);
+//            }
+//
+//            @Override
+//            public void onStatusChanged(String s, int i, Bundle bundle) {
+//
+//            }
+//
+//            @Override
+//            public void onProviderEnabled(String s) {
+//
+//            }
+//
+//            @Override
+//            public void onProviderDisabled(String s) {
+//
+//            }
+//        };
+//        requestLocation(context, locationManager, locationListener);
+        postView.onSubmitButtonClickEvent(animal);
+    }
+
+    @Override
+    public void onClickAddPicture() {
+        // todo implement this
+    }
+
+
+    //    public void requestLocation(Context context, LocationManager locationManager, LocationListener locationListener) {
+//        if (ContextCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_FINE_LOCATION)
+//                == PackageManager.PERMISSION_GRANTED) {
+//            try {
+//                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+//            } catch (SecurityException e) {
+//                Log.d(TAG, "Do not have permission to access location.");
+//                e.printStackTrace();
+//            } catch (NullPointerException e) {
+//                Log.d(TAG, "Location update returned null.");
+//                e.printStackTrace();
+//            }
+//        }
+//        // else
+//        // todo handle not having permission
+//    }
+
+    //        //TODO add picture functionality
 //        if (imagePicked) {
 //
 //            if (imageBmp != null && useBitmap) {
@@ -84,58 +132,4 @@ class PostPresenter extends BasePresenter {
 //        return key;
 //    }
 
-    // todo get location data of phone to add to animal before submitting
-    void onSubmit(Context context, final Animal animal) {
-        LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-        LocationListener locationListener = new LocationListener() {
-            @Override
-            public void onLocationChanged(Location location) {
-                animal.setLatitude(String.valueOf(location.getLatitude()));
-                animal.setLongitude(String.valueOf(location.getLongitude()));
-                DatabaseRequest.submitAnimal(animal);
-            }
-
-            @Override
-            public void onStatusChanged(String s, int i, Bundle bundle) {
-
-            }
-
-            @Override
-            public void onProviderEnabled(String s) {
-
-            }
-
-            @Override
-            public void onProviderDisabled(String s) {
-
-            }
-        };
-        requestLocation(context, locationManager, locationListener);
-    }
-
-    public void onAddPicture() {
-
-    }
-
-    // todo figure out how to cache images for this
-    public void onEdit(final String animalID) {
-        postView.populateDataFields(DatabaseRequest.getAnimal(animalID));
-    }
-
-    public void requestLocation(Context context, LocationManager locationManager, LocationListener locationListener) {
-        if (ContextCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED) {
-            try {
-                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
-            } catch (SecurityException e) {
-                Log.d(TAG, "Do not have permission to access location.");
-                e.printStackTrace();
-            } catch (NullPointerException e) {
-                Log.d(TAG, "Location update returned null.");
-                e.printStackTrace();
-            }
-        }
-        // else
-        // todo handle not having permission
-    }
 }

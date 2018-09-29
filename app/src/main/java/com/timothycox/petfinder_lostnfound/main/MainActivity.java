@@ -12,7 +12,6 @@ import com.timothycox.petfinder_lostnfound.R;
 import com.timothycox.petfinder_lostnfound.home.HomeFragment;
 import com.timothycox.petfinder_lostnfound.listings.ListingsFragment;
 import com.timothycox.petfinder_lostnfound.listings.dummy.DummyContent;
-import com.timothycox.petfinder_lostnfound.util.DatabaseCache;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -22,12 +21,12 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
 
     @BindView(R.id.viewpager)
     ViewPager viewPager;
-
-    private ViewPagerAdapter viewPagerAdapter;
+    @BindView(R.id.navigation)
+    BottomNavigationView navigation;
 
     // region BottomNavigationView
     // todo add proper buttons and actions for bottomnavview
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+    private BottomNavigationView.OnNavigationItemSelectedListener onNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
         // todo change to use home, listings, yourpets
         @Override
@@ -51,48 +50,20 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
     };
     // endregion
 
-    // region Activity Lifecycle
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        DatabaseCache.setCache(getApplicationContext());
-        DatabaseCache.verifyCacheFile();
-        DatabaseCache.updateCache();
+//        DatabaseCache.setCache(getApplicationContext().getCacheDir());
+//        if (DatabaseCache.verifiedCacheFile())
+//            DatabaseCache.updateCache();
 
-        viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
+        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(viewPagerAdapter);
 
-        BottomNavigationView navigation = findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        navigation.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
     }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-    // endregion
 
     @Override
     public void onFragmentInteraction(Uri uri) {

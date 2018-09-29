@@ -15,6 +15,11 @@ import com.timothycox.petfinder_lostnfound.R;
  * status bar and navigation/system bar) with user interaction.
  */
 public class IntroActivity extends AppCompatActivity {
+
+    public interface IntroNavigator {
+
+    }
+
     /**
      * Whether or not the system UI should be auto-hidden after
      * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.

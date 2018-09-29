@@ -1,4 +1,5 @@
 package com.timothycox.petfinder_lostnfound;
 
-public abstract class BasePresenter {
+public interface BasePresenter {
+
 }

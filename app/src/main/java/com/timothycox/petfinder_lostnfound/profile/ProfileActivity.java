@@ -1,7 +1,10 @@
 package com.timothycox.petfinder_lostnfound.profile;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -13,7 +16,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class ProfileActivity extends AppCompatActivity implements ProfileView {
+public class ProfileActivity extends AppCompatActivity implements ProfileContract.View {
+
+    private ProfilePresenterImpl presenter;
 
     // region ButterKnife Bindings
     @BindView(R.id.profile_imageview)
@@ -56,16 +61,59 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView {
     TextView statusTextFromDB;
     @BindView(R.id.profile_description_db)
     TextView descriptionTextFromDB;
-    private ProfilePresenter presenter;
+    private ProfileNavigator navigator;
+
+    @Override
+    @OnClick(R.id.profile_edit_button)
+    public void onClickButton(View view) {
+        switch (view.getId()) {
+            case (R.id.profile_edit_button): {
+                finish();
+                presenter.onEditButton();
+            }
+            // todo implement status button
+            case (R.id.profile_status_change_button): {
+                presenter.onStatusChangeButton();
+            }
+        }
+    }
+
+    @Override
+    public void onEditClickEvent(@NonNull final Animal animal) {
+        navigator.itemClicked(ProfileNavigator.POST_ACTIVITY, animal);
+    }
     // endregion
+
+    @Override
+    public void onStatusChangeClickEvent(@NonNull final Animal animal) {
+//        todo display toast
+        statusTextFromDB.setText(animal.getStatus());
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         ButterKnife.bind(this);
-        presenter = new ProfilePresenter(this, getIntent().getStringExtra("animalID"));
+        presenter = new ProfilePresenterImpl(this, (Animal) getIntent().getParcelableExtra(("animal")));
+        navigator = new ProfileNavigator(this);
         presenter.createProfile();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        presenter = null;
+        navigator = null;
+    }
+
+    public interface ProfileScreenEvents {
+        void itemClicked(final int itemId, @Nullable final Animal animal);
     }
 
     @Override
@@ -79,18 +127,5 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView {
         phoneTextFromDB.setText(animal.getPhone());
         typeTextFromDB.setText(animal.getType());
         statusTextFromDB.setText(animal.getStatus());
-    }
-
-    @Override
-    @OnClick(R.id.profile_edit_button)
-    public void onClickEdit() {
-        presenter.onEdit(getApplicationContext());
-    }
-
-    // todo setup status change button
-    @Override
-    //    @OnClick(R.id.profile_)
-    public void onClickStatusChange() {
-        presenter.onStatusChange();
     }
 }

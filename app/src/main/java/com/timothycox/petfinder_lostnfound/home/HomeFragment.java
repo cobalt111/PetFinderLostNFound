@@ -3,6 +3,7 @@ package com.timothycox.petfinder_lostnfound.home;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,15 +24,16 @@ import butterknife.OnClick;
  * Use the {@link HomeFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HomeFragment extends Fragment implements HomeView {
+public class HomeFragment extends Fragment implements HomeContract.View {
 
     @BindView(R.id.home_post_button)
     ImageButton imageButton;
-    private HomePresenter presenter;
+    private HomePresenterImpl presenter;
+    private HomeNavigatorImpl navigator;
 
     @OnClick(R.id.home_post_button)
-    void onClickPost() {
-        presenter.onPost(getContext());
+    public void onClickPost() {
+        presenter.onPost();
     }
 
     private OnFragmentInteractionListener mListener;
@@ -48,17 +50,22 @@ public class HomeFragment extends Fragment implements HomeView {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        presenter = new HomePresenter(this);
+    public void navigateToPost() {
+        navigator.onPost();
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
         ButterKnife.bind(this, rootView);
-
+        presenter = new HomePresenterImpl(this);
+        navigator = new HomeNavigatorImpl(getContext());
         return rootView;
     }
 
@@ -92,5 +99,9 @@ public class HomeFragment extends Fragment implements HomeView {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    public interface HomeNavigator {
+        void onPost();
     }
 }

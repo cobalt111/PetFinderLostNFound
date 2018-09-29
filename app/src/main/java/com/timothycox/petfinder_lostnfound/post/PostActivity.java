@@ -3,6 +3,7 @@ package com.timothycox.petfinder_lostnfound.post;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -18,7 +19,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnItemSelected;
 
-public class PostActivity extends AppCompatActivity implements PostView {
+public class PostActivity extends AppCompatActivity implements PostContract.View {
+
+    private PostPresenterImpl presenter;
 
     // region ButterKnife Bindings
     @BindArray(R.array.type_dropdown)
@@ -51,9 +54,30 @@ public class PostActivity extends AppCompatActivity implements PostView {
     EditText phoneField;
     @BindView(R.id.post_description)
     EditText descriptionField;
-    private PostPresenter presenter;
+    private PostNavigator navigator;
+
+    @Override
+    @OnClick({R.id.post_submit_button, R.id.post_image_button})
+    public void onClickButton(View view) {
+        final Animal animal = buildAnimalFromEnteredData();
+        switch (view.getId()) {
+            case (R.id.post_submit_button): {
+                presenter.onClickSubmit(animal);
+            }
+            case (R.id.post_image_button): {
+                presenter.onClickAddPicture();
+                // todo add navigator?
+            }
+        }
+    }
     private String typeSelection;
     private String statusSelection;
+
+    @Override
+    public void onSubmitButtonClickEvent(final Animal animal) {
+        finish();
+        navigator.itemClicked(PostNavigator.PROFILE_ACTIVITY, animal);
+    }
 
     @OnItemSelected(R.id.post_spinner_type)
     void onTypeSelection(int position) {
@@ -79,12 +103,19 @@ public class PostActivity extends AppCompatActivity implements PostView {
     // endregion
 
     @Override
+    public void onAddPictureClickEvent() {
+        // todo figure out how pics are managed on screen
+    }
+
+    // region Activity Lifecycle
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
         setTitle(R.string.title_post);
         ButterKnife.bind(this);
-        presenter = new PostPresenter(this);
+        presenter = new PostPresenterImpl(this);
+        navigator = new PostNavigator(this);
 
         ArrayAdapter<String> typeAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, types);
         typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -94,19 +125,45 @@ public class PostActivity extends AppCompatActivity implements PostView {
         statusAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         statusDropdown.setAdapter(statusAdapter);
 
+        if (savedInstanceState != null) {
+            populateDataFields((Animal) savedInstanceState.getParcelable("currentAnimalState"));
+        }
+
         Intent intent = getIntent();
         if (intent.getBooleanExtra("isEditInstance", false))
-            presenter.onEdit(intent.getStringExtra("animalID"));
+            presenter.createEditInstance((Animal) intent.getParcelableExtra("animal"));
     }
 
     @Override
-    @OnClick(R.id.post_submit_button)
-    public void onClickSubmit() {
-        // todo figure out if we need animalbuilder
-        Animal.AnimalBuilder builder = new Animal.AnimalBuilder();
-        Animal animal = builder
+    protected void onPause() {
+        super.onPause();
+        onSaveInstanceState(new Bundle());
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putParcelable("currentAnimalState", buildAnimalFromEnteredData());
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        presenter = null;
+        navigator = null;
+    }
+
+    // todo figure out if we need animalbuilder
+    @Override
+    public Animal buildAnimalFromEnteredData() {
+        return new Animal.Builder()
                 .name(nameField.getText().toString())
-                .color(colorField.getTag().toString())
+                .color(colorField.getText().toString())
                 .date(dateField.getText().toString())
                 .phone(phoneField.getText().toString())
                 .email(emailField.getText().toString())
@@ -115,14 +172,8 @@ public class PostActivity extends AppCompatActivity implements PostView {
                 .type(typeSelection)
                 .status(statusSelection)
                 .build();
-        presenter.onSubmit(getApplicationContext(), animal);
     }
-
-    @Override
-    @OnClick(R.id.post_image_button)
-    public void onClickAddPicture() {
-        presenter.onAddPicture();
-    }
+    // endregion
 
     @Override
     public void populateDataFields(Animal animal) {
@@ -147,5 +198,9 @@ public class PostActivity extends AppCompatActivity implements PostView {
                 break;
             }
         }
+    }
+
+    public interface PostScreenEvents {
+        void itemClicked(final int itemId, final Animal animal);
     }
 }

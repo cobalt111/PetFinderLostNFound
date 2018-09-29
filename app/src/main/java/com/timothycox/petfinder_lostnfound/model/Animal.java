@@ -1,9 +1,22 @@
 package com.timothycox.petfinder_lostnfound.model;
 
-import java.io.Serializable;
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.HashMap;
 
-public class Animal implements Serializable {
+public class Animal implements Parcelable {
+
+    public static final Parcelable.Creator<Animal> CREATOR
+            = new Parcelable.Creator<Animal>() {
+        public Animal createFromParcel(Parcel in) {
+            return new Animal(in);
+        }
+
+        public Animal[] newArray(int size) {
+            return new Animal[size];
+        }
+    };
 
     private String name;
     private String type;
@@ -16,11 +29,14 @@ public class Animal implements Serializable {
     private String phone;
     private String token;
     private String description;
-    private String thumbURL;
+    private String thumbUrl;
     private String key;
     private String status;
 
-    public Animal(String name, String type, String color, String date, String email, String location, String latitude, String longitude, String phone, String token, String description, String thumbURL, String key, String status) {
+    // todo figure out better way to handle pojo?
+    public Animal(String name, String type, String color, String date, String email, String location,
+                  String latitude, String longitude, String phone, String token, String description,
+                  String thumbUrl, String key, String status) {
         this.name = name;
         this.type = type;
         this.color = color;
@@ -32,12 +48,16 @@ public class Animal implements Serializable {
         this.phone = phone;
         this.token = token;
         this.description = description;
-        this.thumbURL = thumbURL;
+        this.thumbUrl = thumbUrl;
         this.key = key;
         this.status = status;
     }
 
-    private Animal(AnimalBuilder builder) {
+    // todo implement parcelable
+    private Animal(Parcel in) {
+    }
+
+    private Animal(Builder builder) {
         this.name = builder.name;
         this.type = builder.type;
         this.color = builder.color;
@@ -49,7 +69,7 @@ public class Animal implements Serializable {
         this.phone = builder.phone;
         this.token = builder.token;
         this.description = builder.description;
-        this.thumbURL = builder.thumbURL;
+        this.thumbUrl = builder.thumbURL;
         this.key = builder.key;
         this.status = builder.status;
     }
@@ -99,8 +119,8 @@ public class Animal implements Serializable {
         return description;
     }
 
-    public String getThumbURL() {
-        return thumbURL;
+    public String getThumbUrl() {
+        return thumbUrl;
     }
 
     public String getKey() {
@@ -111,20 +131,8 @@ public class Animal implements Serializable {
         return status;
     }
 
-    public HashMap<String, Object> parseAnimalToHashMap() {
-        HashMap<String, Object> map = new HashMap<>();
-        map.put("name", name);
-        map.put("color", color);
-        map.put("email", email);
-        map.put("phone", phone);
-        map.put("location", location);
-        map.put("token", token);
-        map.put("date", date);
-        map.put("description", description);
-        map.put("type", type);
-        map.put("found", status);
-        map.put("thumbURL", thumbURL);
-        return map;
+    public void setThumbUrl(String thumbUrl) {
+        this.thumbUrl = thumbUrl;
     }
     // endregion
 
@@ -173,8 +181,20 @@ public class Animal implements Serializable {
         this.description = description;
     }
 
-    public void setThumbURL(String thumbURL) {
-        this.thumbURL = thumbURL;
+    public HashMap<String, Object> parseAnimalToHashMap() {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("name", name);
+        map.put("color", color);
+        map.put("email", email);
+        map.put("phone", phone);
+        map.put("location", location);
+        map.put("token", token);
+        map.put("date", date);
+        map.put("description", description);
+        map.put("type", type);
+        map.put("found", status);
+        map.put("thumbUrl", thumbUrl);
+        return map;
     }
 
     public void setKey(String key) {
@@ -186,7 +206,17 @@ public class Animal implements Serializable {
     }
     // endregion
 
-    public static class AnimalBuilder {
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+
+    }
+
+    public static class Builder {
 
         private String type;
         private String status;
@@ -203,80 +233,80 @@ public class Animal implements Serializable {
         private String thumbURL;
         private String key;
 
-        public AnimalBuilder() {
+        public Builder() {
         }
 
         public Animal build() {
             return new Animal(this);
         }
 
-        // region AnimalBuilder Setters
-        public AnimalBuilder name(String name) {
+        // region Builder Setters
+        public Builder name(String name) {
             this.name = name;
             return this;
         }
 
-        public AnimalBuilder type(String type) {
+        public Builder type(String type) {
             this.type = type;
             return this;
         }
 
-        public AnimalBuilder status(String status) {
+        public Builder status(String status) {
             this.status = status;
             return this;
         }
 
-        public AnimalBuilder color(String color) {
+        public Builder color(String color) {
             this.color = color;
             return this;
         }
 
-        public AnimalBuilder date(String date) {
+        public Builder date(String date) {
             this.date = date;
             return this;
         }
 
-        public AnimalBuilder email(String email) {
+        public Builder email(String email) {
             this.email = email;
             return this;
         }
 
-        public AnimalBuilder location(String location) {
+        public Builder location(String location) {
             this.location = location;
             return this;
         }
 
-        public AnimalBuilder latitude(String latitude) {
+        public Builder latitude(String latitude) {
             this.latitude = latitude;
             return this;
         }
 
-        public AnimalBuilder longitude(String longitude) {
+        public Builder longitude(String longitude) {
             this.longitude = longitude;
             return this;
         }
 
-        public AnimalBuilder phone(String phone) {
+        public Builder phone(String phone) {
             this.phone = phone;
             return this;
         }
 
-        public AnimalBuilder token(String token) {
+        public Builder token(String token) {
             this.token = token;
             return this;
         }
 
-        public AnimalBuilder description(String description) {
+        public Builder description(String description) {
             this.description = description;
             return this;
         }
 
-        public AnimalBuilder thumbURL(String thumbURL) {
+        public Builder thumbURL(String thumbURL) {
             this.thumbURL = thumbURL;
             return this;
         }
 
-        public AnimalBuilder key(String key) {
+        public Builder key(String key) {
             this.key = key;
             return this;
         }
